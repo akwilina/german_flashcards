@@ -31,5 +31,4 @@ public class User {
                     columnList = "username"))
     @Column(name = "role")
     private Set<String> roles;
-
 }
