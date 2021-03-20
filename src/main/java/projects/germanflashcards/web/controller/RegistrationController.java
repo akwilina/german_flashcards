@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import projects.germanflashcards.exception.UserAlreadyExistsException;
 import projects.germanflashcards.service.UserService;
 import projects.germanflashcards.web.command.RegisterUserCommand;
 
@@ -37,9 +38,16 @@ public class RegistrationController {
             return "register/form";
         }
 
-        Long id = userService.create(registerUserCommand);
-        log.debug("Id of created user = {}", id);
-
-        return "redirect:/login";
+        try {
+            Long id = userService.create(registerUserCommand);
+            log.debug("Id of created user = {}", id);
+            return "redirect:/login";
+        } catch (UserAlreadyExistsException uaee){
+            bindingResult.rejectValue("username", null, "User with that username already exist");
+            return "register/form";
+        } catch (RuntimeException re){
+            bindingResult.rejectValue(null, null,"Exception occurred, please contact the admin");
+            return "register/form";
+        }
     }
 }
