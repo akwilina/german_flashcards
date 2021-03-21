@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import projects.germanflashcards.data.user.UserSummary;
@@ -22,11 +23,14 @@ public class UserProfileController {
 
     private final UserService userService;
 
+    @ModelAttribute
+    public UserSummary userSummary() {
+        return userService.getCurrentUserSummaty();
+    }
+
     @GetMapping
     public String getProfilePage(Model model) {
-        UserSummary summary = userService.getCurrentUserSummaty();
-        EditUserCommand editUserCommand = createEditUserCommand(summary);
-        model.addAttribute(summary);
+        EditUserCommand editUserCommand = createEditUserCommand(userSummary());
         model.addAttribute(editUserCommand);
         return "user/profile";
     }
@@ -41,7 +45,24 @@ public class UserProfileController {
 
     @PostMapping("/edit")
     public String editUserProfile(@Valid EditUserCommand editUserCommand, BindingResult bindings) {
-        //TODO
+        log.debug("Data to edit user {}", editUserCommand);
+
+        if (bindings.hasErrors()) {
+            log.debug("Wrong data: {}", bindings.getAllErrors());
+            return "user/profile";
+        }
+
+        try {
+            boolean success = userService.edit(editUserCommand);
+            log.debug("Data edition successed? {}", success);
+            return "redirect:/profile";
+
+        } catch (RuntimeException re) {
+            log.warn(re.getLocalizedMessage());
+            log.debug("Error in data edition", re);
+            bindings.rejectValue(null, null, "Error has occured");
+
+        }
 
         return "redirect:/profile";
 
