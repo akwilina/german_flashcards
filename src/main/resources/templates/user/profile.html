@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Your profile</title>
@@ -7,9 +7,10 @@
 <body>
 <section>
     <h1>Your profile</h1>
+    <h1><span th:text="${userSummary.username}"></span></h1>
 </section>
 <section>
-    <form action="/edit-profile" method="" post>
+    <form action="/edit-profile" method="post">
         <div>
             <label>Name:
                 <input type="text" name="firstName"/>

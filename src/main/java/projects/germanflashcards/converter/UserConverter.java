@@ -1,7 +1,9 @@
 package projects.germanflashcards.converter;
 
 import org.springframework.stereotype.Component;
+import projects.germanflashcards.data.user.UserSummary;
 import projects.germanflashcards.domain.model.User;
+import projects.germanflashcards.domain.model.UserDetails;
 import projects.germanflashcards.web.command.RegisterUserCommand;
 
 @Component
@@ -12,6 +14,17 @@ public class UserConverter {
         return User.builder()
                 .username(registerUserCommand.getUsername())
                 .password(registerUserCommand.getPassword())
+                .build();
+    }
+
+    public UserSummary toUserSummary(User user) {
+        UserDetails details = user.getDetails();
+
+        return UserSummary.builder()
+                .username(user.getUsername())
+                .firstName(details.getFirstName())
+                .lastName(details.getLastName())
+                .birthDate(details.getBirthDate())
                 .build();
     }
 }
