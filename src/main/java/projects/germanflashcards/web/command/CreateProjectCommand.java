@@ -21,7 +21,7 @@ public class CreateProjectCommand {
     @URL
     private String url;
     @NotNull
-    @Size(min = 3, max = 64)
+    @Size(min = 3, max = 160)
     private String description;
 
 }
