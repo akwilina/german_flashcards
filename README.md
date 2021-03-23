@@ -1,4 +1,4 @@
-# German flashcards
+# Project management application
 
 ---
 
@@ -6,4 +6,4 @@
 
 ---
 
-German flashcards for job interview 
+Simple project management application.
