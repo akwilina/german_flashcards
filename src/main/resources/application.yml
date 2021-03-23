@@ -1,6 +1,6 @@
 spring:
   application:
-    name: german-flashcards
+    name: project_management_app
   jpa:
     hibernate:
       ddl-auto: create-drop

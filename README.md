@@ -2,7 +2,7 @@
 
 ---
 
-[![Build status](https://github.com/akwilina/german_flashcards/workflows/Build/badge.svg)](https://github.com/akwilina/german_flashcards/actions)
+[![Build status](https://github.com/akwilina/project_management_app/workflows/Build/badge.svg)](https://github.com/akwilina/project_management_app/actions)
 
 ---
 
